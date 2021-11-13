@@ -34,6 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
             <!-- This is added to handle a deep link -->
+            <!-- 这是为了处理深度链接而添加的 -->
             <nav-graph android:value="@navigation/navigation" />
         </activity>
     </application>

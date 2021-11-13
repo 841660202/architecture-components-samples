@@ -1,5 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!--
+<?xml version="1.0" encoding="utf-8"?><!--
   ~ Copyright (C) 2018 The Android Open Source Project
   ~
   ~ Licensed under the Apache License, Version 2.0 (the "License");
@@ -23,16 +22,20 @@
     android:layout_height="match_parent"
     tools:context="com.example.android.navigationsample.TitleScreen"
     tools:layout_editor_absoluteY="81dp">
-
+    <!--
+    tools:context ADT的Layout Editor在你当前的Layout文件里面设置对应的渲染上下文
+    这些tools 属性主要针对的 上图右边那个模拟器 调试时候显示状态，，编译中不起作用的,
+    文章：https://blog.csdn.net/xiabing082/article/details/50563559
+    -->
     <!-- TODO: Update blank fragment layout -->
 
     <TextView
         android:id="@+id/game_title"
-        android:gravity="center_horizontal"
         android:layout_width="368dp"
         android:layout_height="81dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
+        android:gravity="center_horizontal"
         android:text="@string/trivia"
         android:textAlignment="center"
         android:textAllCaps="false"

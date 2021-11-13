@@ -28,18 +28,21 @@ import androidx.navigation.Navigation
  * Shows the main title screen.
  */
 class TitleScreen : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+
+        // 获取布局文件
         val view = inflater.inflate(R.layout.fragment_title_screen, container, false)
 
+        // 在布局文件中找到 play_btn ，绑定事件
         view.findViewById<Button>(R.id.play_btn).setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_title_screen_to_register)
         }
+        // 在布局文件中找到 leaderboard_btn ，绑定事件
         view.findViewById<Button>(R.id.leaderboard_btn).setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_title_screen_to_leaderboard)
         }
-
+        // 将布局文件展示到这个 TitleScreen上，  tools:context="com.example.android.navigationsample.TitleScreen"
+        // 这个工具是做什么用的？见：R.layout.fragment_title_screen中的注释
         return view
     }
 }

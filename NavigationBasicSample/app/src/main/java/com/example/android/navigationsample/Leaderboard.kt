@@ -32,19 +32,21 @@ import androidx.navigation.Navigation
  */
 class Leaderboard : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_leaderboard, container, false)
-
         val viewAdapter = MyAdapter(arrayOf("Flo", "Ly", "Jo"))
-
+//        leaderboard_list RecyclerView
         view.findViewById<RecyclerView>(R.id.leaderboard_list).run {
             // use this setting to improve performance if you know that changes
             // in content do not change the layout size of the RecyclerView
+            // 如果您知道内容的更改不会更改RecyclerView的布局大小，请使用此设置提高性能
             setHasFixedSize(true)
-
             // specify an viewAdapter (see also next example)
+            // 指定viewAdapter（另请参见下一个示例）
             adapter = viewAdapter
         }
         return view
@@ -52,42 +54,42 @@ class Leaderboard : Fragment() {
 
 }
 
-class MyAdapter(private val myDataset: Array<String>) :
-    RecyclerView.Adapter<MyAdapter.ViewHolder>() {
+class MyAdapter(private val myDataset: Array<String>) : RecyclerView.Adapter<MyAdapter.ViewHolder>() {
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
     // you provide access to all the views for a data item in a view holder.
     // Each data item is just a string in this case that is shown in a TextView.
+    // 为每个数据项提供对视图的引用复杂的数据项可能需要每个项多个视图，
+    // 并且您可以提供对视图持有者中数据项的所有视图的访问。
+    // 在本例中，每个数据项只是一个字符串，显示在TextView中。
     class ViewHolder(val item: View) : RecyclerView.ViewHolder(item)
 
 
-    // Create new views (invoked by the layout manager)
-    override fun onCreateViewHolder(parent: ViewGroup,
-                                    viewType: Int): ViewHolder {
+    // Create new views (invoked by the layout manager) 创建新视图（由布局管理器调用）
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         // create a new view
-        val itemView = LayoutInflater.from(parent.context)
-            .inflate(R.layout.list_view_item, parent, false)
-
+        // LayoutInflater 布局填充器
+        val itemView = LayoutInflater.from(parent.context).inflate(R.layout.list_view_item, parent, false)
 
         return ViewHolder(itemView)
     }
 
     // Replace the contents of a view (invoked by the layout manager)
+    // 替换视图的内容（由布局管理器调用）
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         // - get element from your dataset at this position
         // - replace the contents of the view with that element
+        //-在此位置从数据集中获取元素
+        //-用该元素替换视图的内容
         holder.item.findViewById<TextView>(R.id.user_name_text).text = myDataset[position]
 
-        holder.item.findViewById<ImageView>(R.id.user_avatar_image)
-                .setImageResource(listOfAvatars[position])
+        holder.item.findViewById<ImageView>(R.id.user_avatar_image).setImageResource(listOfAvatars[position])
 
         holder.item.setOnClickListener {
+            // 返回一个新的Bundle,其中给定的键/值对作为元素.
             val bundle = bundleOf("userName" to myDataset[position])
-
-            Navigation.findNavController(holder.item).navigate(
-                    R.id.action_leaderboard_to_userProfile,
-                bundle)
+            Navigation.findNavController(holder.item).navigate(R.id.action_leaderboard_to_userProfile, bundle)
         }
     }
 
@@ -96,4 +98,7 @@ class MyAdapter(private val myDataset: Array<String>) :
 }
 
 private val listOfAvatars = listOf(
-        R.drawable.avatar_1_raster, R.drawable.avatar_2_raster, R.drawable.avatar_3_raster)
+    R.drawable.avatar_1_raster,
+    R.drawable.avatar_2_raster,
+    R.drawable.avatar_3_raster
+)

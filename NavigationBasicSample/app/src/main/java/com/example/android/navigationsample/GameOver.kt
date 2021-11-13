@@ -29,11 +29,10 @@ import androidx.navigation.Navigation
  */
 class GameOver : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_game_over, container, false)
-
+        // 绑定按钮
         view.findViewById<View>(R.id.play_btn4).setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_game_over_to_match)
         }

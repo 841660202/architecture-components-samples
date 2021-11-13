@@ -29,16 +29,17 @@ import androidx.navigation.Navigation
  */
 class ResultsWinner : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_results_winner, container, false)
-
+        // 绑定play_btn2按钮，跳转
         view.findViewById<Button>(R.id.play_btn2).setOnClickListener {
+            // 胜者进行匹配
             Navigation.findNavController(view).navigate(R.id.action_results_winner_to_match)
         }
 
         view.findViewById<Button>(R.id.leaderboard_btn2).setOnClickListener {
+        // 结果获胜者进入排行榜
             Navigation.findNavController(view).navigate(R.id.action_results_winner_to_leaderboard)
         }
         return view

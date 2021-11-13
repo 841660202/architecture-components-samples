@@ -30,11 +30,11 @@ import androidx.navigation.Navigation
  */
 class Register : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-                              savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         // Inflate the layout for this fragment
+        // 为该碎片膨胀布局（拿个布局来用）
         val view = inflater.inflate(R.layout.fragment_register, container, false)
-
+        // 布局中signup_btn 【注册】绑定事件
         view.findViewById<Button>(R.id.signup_btn).setOnClickListener {
             Navigation.findNavController(view).navigate(R.id.action_register_to_match)
         }
