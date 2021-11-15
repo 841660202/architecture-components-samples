@@ -34,7 +34,7 @@ interface RedditApi {
 
     @GET("/r/{subreddit}/hot.json")
     suspend fun getTop(
-            @Path("subreddit") subreddit: String,
+            @Path("subreddit") subreddit: String, // 路径
             @Query("limit") limit: Int,
             @Query("after") after: String? = null,
             @Query("before") before: String? = null

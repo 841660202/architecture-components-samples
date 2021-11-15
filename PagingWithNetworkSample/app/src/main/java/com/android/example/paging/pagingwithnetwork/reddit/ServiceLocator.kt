@@ -29,6 +29,7 @@ import com.android.example.paging.pagingwithnetwork.reddit.repository.inMemory.b
 /**
  * Super simplified service locator implementation to allow us to replace default implementations
  * for testing.
+ * 超级简化的服务定位器实现，允许我们替换默认实现进行测试。
  */
 interface ServiceLocator {
     companion object {
@@ -61,6 +62,7 @@ interface ServiceLocator {
 
 /**
  * default implementation of ServiceLocator that uses production endpoints.
+ * 使用生产端点的ServiceLocator的默认实现。
  */
 open class DefaultServiceLocator(val app: Application, val useInMemoryDb: Boolean) : ServiceLocator {
     private val db by lazy {

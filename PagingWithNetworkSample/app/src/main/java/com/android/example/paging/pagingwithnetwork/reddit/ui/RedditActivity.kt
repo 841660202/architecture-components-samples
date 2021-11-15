@@ -47,6 +47,7 @@ class RedditActivity : AppCompatActivity() {
     lateinit var binding: ActivityRedditBinding
         private set
 
+    // viewModel工厂没有写成单个文件，vm写成单个文件
     private val model: SubRedditViewModel by viewModels {
         object : AbstractSavedStateViewModelFactory(this, null) {
             override fun <T : ViewModel?> create(
@@ -54,8 +55,11 @@ class RedditActivity : AppCompatActivity() {
                 modelClass: Class<T>,
                 handle: SavedStateHandle
             ): T {
+                // 页面传递参数
                 val repoTypeParam = intent.getIntExtra(KEY_REPOSITORY_TYPE, 0)
+                // 获取枚举值
                 val repoType = RedditPostRepository.Type.values()[repoTypeParam]
+
                 val repo = ServiceLocator.instance(this@RedditActivity)
                     .getRepository(repoType)
                 @Suppress("UNCHECKED_CAST")
@@ -83,19 +87,20 @@ class RedditActivity : AppCompatActivity() {
             header = PostsLoadStateAdapter(adapter),
             footer = PostsLoadStateAdapter(adapter)
         )
-
+        /**三个lifecycleScope.launchWhenCreated*/
+        // 加载指示器显示loading
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow.collect { loadStates ->
                 binding.swipeRefresh.isRefreshing = loadStates.mediator?.refresh is LoadState.Loading
             }
         }
-
+        // adapter提交数据
         lifecycleScope.launchWhenCreated {
             model.posts.collectLatest {
                 adapter.submitData(it)
             }
         }
-
+        //
         lifecycleScope.launchWhenCreated {
             adapter.loadStateFlow
                 // Use a state-machine to track LoadStates such that we only transition to
@@ -103,18 +108,21 @@ class RedditActivity : AppCompatActivity() {
                 .asMergedLoadStates()
                 // Only emit when REFRESH changes, as we only want to react on loads replacing the
                 // list.
+                    // 过滤掉连续重复的元素,不连续重复的是不过滤
                 .distinctUntilChangedBy { it.refresh }
+                    // 仅对刷新完成的情况作出反应，即不加载。
                 // Only react to cases where REFRESH completes i.e., NotLoading.
                 .filter { it.refresh is LoadState.NotLoading }
                 // Scroll to top is synchronous with UI updates, even if remote load was triggered.
+                    // 滚动到顶部与UI更新同步，即使触发了远程加载。
                 .collect { binding.list.scrollToPosition(0) }
         }
     }
-
+    // 刷新
     private fun initSwipeToRefresh() {
         binding.swipeRefresh.setOnRefreshListener { adapter.refresh() }
     }
-
+    // 查询
     private fun initSearch() {
         binding.input.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_GO) {
@@ -133,7 +141,7 @@ class RedditActivity : AppCompatActivity() {
             }
         }
     }
-
+    // 数据更新
     private fun updatedSubredditFromInput() {
         binding.input.text.trim().toString().let {
             if (it.isNotBlank()) {
@@ -141,7 +149,7 @@ class RedditActivity : AppCompatActivity() {
             }
         }
     }
-
+    // 需要启动哪个页面，将intent方法放在哪个页面，封装的较好，可复用，不乱
     companion object {
         const val KEY_REPOSITORY_TYPE = "repository_type"
         fun intentFor(context: Context, type: RedditPostRepository.Type): Intent {

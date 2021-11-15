@@ -35,9 +35,9 @@ abstract class RedditDb : RoomDatabase() {
     companion object {
         fun create(context: Context, useInMemory: Boolean): RedditDb {
             val databaseBuilder = if (useInMemory) {
-                Room.inMemoryDatabaseBuilder(context, RedditDb::class.java)
+                Room.inMemoryDatabaseBuilder(context, RedditDb::class.java) // 使用缓存
             } else {
-                Room.databaseBuilder(context, RedditDb::class.java, "reddit.db")
+                Room.databaseBuilder(context, RedditDb::class.java, "reddit.db") // 使用db数据库
             }
             return databaseBuilder
                 .fallbackToDestructiveMigration()
